@@ -1,13 +1,12 @@
 // src/pages/teacher/EditQuizDetails.jsx
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import api from '../../api/axiosConfig';
 import EditQuestionModal from '../../components/EditQuestionModal';
 import './QuizCreation.css';
 
 const EditQuizDetails = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   
   const [quiz, setQuiz] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -40,7 +39,7 @@ const EditQuizDetails = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { questions, ...detailsToUpdate } = quiz;
+      const { questions: _questions, ...detailsToUpdate } = quiz;
       await api.put(`/quizzes/${id}`, detailsToUpdate);
       alert('Quiz details updated successfully!');
     } catch (error) {

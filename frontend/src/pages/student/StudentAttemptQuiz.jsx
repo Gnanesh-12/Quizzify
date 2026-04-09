@@ -31,6 +31,7 @@ const StudentAttemptQuiz = () => {
         setTimeLeft(response.data.duration * 60); 
         setLoading(false);
       } catch (err) {
+        console.error(err);
         setError('Could not load the quiz. Please try again.');
         setLoading(false);
       }
@@ -49,6 +50,7 @@ const StudentAttemptQuiz = () => {
     }, 1000);
 
     return () => clearTimeout(timerId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeLeft, quiz]);
 
   // --- EVENT HANDLERS & LOGIC ---
@@ -78,6 +80,7 @@ const StudentAttemptQuiz = () => {
       const response = await api.post(`/quizzes/${quiz._id}/submit`, { answers });
       navigate('/student/results', { state: { results: response.data } });
     } catch (err) {
+      console.error(err);
       setError('There was an error submitting your quiz.');
     }
   };
