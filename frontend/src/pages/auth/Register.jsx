@@ -2,7 +2,7 @@
 // --- IMPORTS ---
 // =================================================================
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import api from '../../api/axiosConfig';
 import './AuthForm.css';
 
@@ -10,12 +10,16 @@ import './AuthForm.css';
 // --- COMPONENT DEFINITION ---
 // =================================================================
 const Register = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const initialRole = searchParams.get('role') === 'teacher' ? 'teacher' : 'student';
+
   // --- STATE MANAGEMENT ---
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
-    role: 'student',
+    role: initialRole,
     rollNumber: '',
     dateOfBirth: '',
     teacherId: '',
@@ -76,10 +80,6 @@ const Register = () => {
             <div className="form-group">
               <label htmlFor="rollNumber">Roll Number</label>
               <input type="text" name="rollNumber" id="rollNumber" onChange={handleChange} />
-            </div>
-            <div className="form-group">
-              <label htmlFor="dateOfBirth">Date of Birth</label>
-              <input type="date" name="dateOfBirth" id="dateOfBirth" onChange={handleChange} />
             </div>
           </>
         )}

@@ -20,30 +20,46 @@ import Repository from './pages/Repository';
 function App() {
   return (
     <Router>
-      <Navbar />
-      <main className="container">
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          
-          <Route path="/profile" element={<Profile />} />
-          
-          {/* ** ADDED THE REPOSITORY ROUTE HERE ** */}
-          <Route path="/repository" element={<Repository />} />
+      <Routes>
+        {/* Landing page: full-width, no container — renders its own Navbar via footer */}
+        <Route
+          path="/"
+          element={
+            <>
+              <Navbar />
+              <LandingPage />
+            </>
+          }
+        />
 
-          {/* Teacher Routes */}
-          <Route path="/teacher/dashboard" element={<TeacherHome />} />
-          <Route path="/teacher/create-quiz" element={<CreateQuizDetails />} />
-          <Route path="/teacher/add-questions/:quizId" element={<AddQuizQuestions />} />
-          <Route path="/teacher/edit-quiz/:id" element={<EditQuizDetails />} />
-
-          {/* Student Routes */}
-          <Route path="/student/join" element={<StudentJoinQuiz />} />
-          <Route path="/student/attempt/:code" element={<StudentAttemptQuiz />} />
-          <Route path="/student/results" element={<StudentQuizResults />} />
-        </Routes>
-      </main>
+        {/* All other pages share the standard Navbar + container layout */}
+        <Route
+          path="/*"
+          element={
+            <>
+              <Navbar />
+              <main className="container">
+                <Routes>
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/profile" element={<Profile />} />
+                  {/* ** REPOSITORY ROUTE ** */}
+                  <Route path="/repository" element={<Repository />} />
+                  {/* Teacher Routes */}
+                  <Route path="/teacher/dashboard" element={<TeacherHome />} />
+                  <Route path="/teacher/create-quiz" element={<CreateQuizDetails />} />
+                  <Route path="/teacher/add-questions/:quizId" element={<AddQuizQuestions />} />
+                  <Route path="/teacher/edit-quiz/:id" element={<EditQuizDetails />} />
+                  {/* Student Routes */}
+                  <Route path="/student/join" element={<StudentJoinQuiz />} />
+                  <Route path="/student/attempt/:code" element={<StudentAttemptQuiz />} />
+                  <Route path="/student/results" element={<StudentQuizResults />} />
+                </Routes>
+              </main>
+            </>
+          }
+        />
+      </Routes>
     </Router>
   );
 }
